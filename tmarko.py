@@ -4,7 +4,9 @@
 
     https://github.com/frostming/marko
 """
-import codecs, sys, re
+import codecs
+import sys
+import re
 import marko
 from marko.ext.latex_renderer import LatexRenderer as MarkoLatexRenderer
 
@@ -22,7 +24,8 @@ class InlineMath(marko.inline.InlineElement):
 class DisplayMath(marko.inline.InlineElement):
 
     priority = 10
-    pattern = re.compile(r'\\\[\s*(?:{([a-z]*\*?)})?\s*\n((?:(?!\\\]).*\s*\n)*)\\\]\s*$', re.M)
+    pattern = re.compile(r'\\\[\s*(?:{([a-z]*\*?)})?\s*\n'
+                         r'((?:(?!\\\]).*\s*\n)*)\\\]\s*$', re.M)
     parse_children = False
 
     def __init__(self, match):
@@ -67,7 +70,7 @@ class Cite(marko.inline.InlineElement):
 
     priority = 6
     pattern = re.compile(r'\[(?:(@[-_+a-zA-Z0-9:]*(?:,\s*@[-_+a-zA-Z0-9:]*)*)|'
-        r'@([-_+a-zA-Z0-9:]*),\s*([^@][^\]]*)?)\]')
+                         r'@([-_+a-zA-Z0-9:]*),\s*([^@][^\]]*)?)\]')
     parse_children = False
 
     def __init__(self, match):
@@ -115,7 +118,13 @@ class TheoremEnv(marko.block.BlockElement):
 
 
 class ElementsExt:
-    elements = [InlineMath, DisplayMath, TheoremEnv, Quotes, Label, RefLabel, Cite]
+    elements = [InlineMath,
+                DisplayMath,
+                TheoremEnv,
+                Quotes,
+                Label,
+                RefLabel,
+                Cite]
 
 
 class LatexRenderer(MarkoLatexRenderer):
@@ -126,7 +135,7 @@ class LatexRenderer(MarkoLatexRenderer):
     def render_heading(self, element):
         children = self.render_children(element)
         headers = ["section", "subsection", "subsubsection", "subsubsection*",
-                "paragraph*", "subparagraph*"]
+                   "paragraph*", "subparagraph*"]
         header = headers[element.level - 1]
         return f"\\{header}{{{children}}}\n"
 
@@ -146,7 +155,7 @@ class LatexRenderer(MarkoLatexRenderer):
         for line in content.split('\n'):
             displaytex += '  ' + line + '\n'
         if element.envname is None:
-            return f'\[\n{displaytex}\]'
+            return f'\\[\n{displaytex}\\]'
         else:
             return self._environment(element.envname, displaytex)
 
