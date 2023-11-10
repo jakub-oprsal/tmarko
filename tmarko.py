@@ -9,6 +9,7 @@ import sys
 import re
 import marko
 from marko.ext.latex_renderer import LatexRenderer as MarkoLatexRenderer
+from textwrap import indent
 
 
 class InlineMath(marko.inline.InlineElement):
@@ -180,6 +181,12 @@ class LatexRenderer(MarkoLatexRenderer):
 
     def render_raw_text(self, element):
         return self._escape_plaintext(element.children)
+
+    @staticmethod
+    def _environment(envname, content) -> str:
+        return f'\\begin{{{envname}}}\n' + \
+               indent(content, 2*' ') + \
+               f'\\end{{{envname}}}'
 
     @staticmethod
     def _escape_plaintext(text: str) -> str:

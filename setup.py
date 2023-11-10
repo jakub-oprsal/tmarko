@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
         name = 'tmarko',
-        version = '0.1',
+        version = '0.1a',
         description = 'Hack of `marko` markdown parser for LaTeX output',
         author = 'Jakub Opršal',
         author_email = 'jakub.oprsal@cs.ox.ac.uk',
