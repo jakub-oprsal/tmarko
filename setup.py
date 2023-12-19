@@ -3,11 +3,11 @@ from setuptools import setup
 
 setup(
         name = 'tmarko',
-        version = '0.1a',
+        version = '0.1a2',
         description = 'Hack of `marko` markdown parser for LaTeX output',
         author = 'Jakub Opršal',
         author_email = 'jakub.oprsal@cs.ox.ac.uk',
         license = 'MIT',
         py_modules = ['tmarko'],
-        install_requires = ['marko']
+        install_requires = ['marko<=1.3.1']
 )
